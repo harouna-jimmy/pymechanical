@@ -21,14 +21,19 @@
 # SOFTWARE.
 
 """Launch embedded instance."""
+import logging
 import sys
 
 import ansys.mechanical.core as pymechanical
+from ansys.mechanical.core.embedding.logger import Configuration, Logger
 
 
 def launch_app(version, private_appdata):
     """Launch embedded instance of app."""
+    sys.stderr.write("launching embedded app\n")
+    sys.stderr.flush()
     app = pymechanical.App(version=version, private_appdata=private_appdata)
+    Logger.info("launched embedded app")
     return app
 
 
@@ -47,6 +52,8 @@ def print_showtriad(version, appdata_option):
 
 
 if __name__ == "__main__":
+    Configuration.configure(level=logging.DEBUG, to_stdout=True, base_directory=None)
+    sys.stderr.write("running embedded app\n")
     version = int(sys.argv[1])
     if len(sys.argv) == 2:
         launch_app(version, False)

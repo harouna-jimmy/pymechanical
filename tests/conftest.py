@@ -199,18 +199,19 @@ def test_env():
     test_env_object = TestEnv()
 
     # Create virtual environment
+    print(f"creating virtual environment in {venv_dir}")
     subprocess.run([sys.executable, "-m", "venv", venv_dir], env=env_copy)
-    # print(f"created virtual environment in {venv_dir}")
 
     # Upgrade pip
     cmdline = [test_env_object.python, "-m", "pip", "install", "-U", "pip"]
     subprocess.check_call(cmdline, env=test_env_object.env)
+    print(f"created virtual environment in {venv_dir}")
 
     yield test_env_object
 
-    # print(f"\ndeleting virtual environment in {venv_dir}")
+    print(f"\ndeleting virtual environment in {venv_dir}")
     shutil.rmtree(venv_dir)
-    # print(f"deleted virtual environment in {venv_dir}\n")
+    print(f"deleted virtual environment in {venv_dir}\n")
 
 
 def launch_mechanical_instance(cleanup_on_exit=False):
