@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 7
     needs: []
     container:
-      image: ghcr.io/ansys/mechanical:24.2_candidate
+      image: ghcr.io/ansys/mechanical:36c7e0eb9ad16cffdf40d9cd95b4c89c700a9ae4202308cb8d6c05801d078a91
       options: --entrypoint /bin/bash
     strategy:
       fail-fast: false
