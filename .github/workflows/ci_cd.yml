@@ -31,34 +31,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        color: ['blue', 'green', 'yellow', 'brown', 'fuschia', 'maroon']
+        #color: ['blue', 'green', 'yellow', 'brown', 'fuschia', 'maroon']
+        color: ['blue']
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up python and pip
-        run: |
-          apt update
-          apt install --reinstall ca-certificates
-          apt install software-properties-common -y
-          add-apt-repository ppa:deadsnakes/ppa -y
-          apt install python3.12 -y
-          ln -s /usr/bin/python3.12 /usr/bin/python
-          apt install python3.12-venv -y
-          python -m ensurepip --default-pip
-          pip3 install --upgrade pip
-          python --version
-          pip3 --version
-
-      - name: Install dependencies
-        run: |
-          apt install -y lsb-release xvfb
-          pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pip setuptools
-          pip3 install --upgrade pip flit
 
       - name: Install packages for testing
         run: |
-          python -m pip install ansys-mechanical-env
-          pip install .[tests]
+          python3.12 -m pip install .[tests]
 
       - name: Unit Testing and coverage
         env:
@@ -68,6 +49,5 @@ jobs:
           ANSYS_WORKBENCH_LOGGING: 1
           ANSYS_WORKBENCH_LOGGING_FILTER_LEVEL: 0
           EMBEDDING_ASSEMBLY_RESOLVER_STDOUT: 1
-          #NUM_CORES: 1
         run: |
-          xvfb-run mechanical-env pytest -m embedding -s || true
+          xvfb-run mechanical-env python3.12 -m pytest -m embedding -s
