@@ -50,6 +50,7 @@ jobs:
           ANSYS_WORKBENCH_LOGGING_FILTER_LEVEL: 0
           EMBEDDING_ASSEMBLY_RESOLVER_STDOUT: 1
           ANSYS_MECHANICAL_FILE_MGT_NO_DSLIBRARY_FILESYSTEMOPERATIONS: 1
+          ENGRDATA_SERVER_SERIAL: 1
         run: |
           xvfb-run mechanical-env python3.12 -m pytest -m embedding -s
   launch-tests:
