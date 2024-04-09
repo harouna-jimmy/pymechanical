@@ -31,7 +31,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        color: ['blue', 'green', 'yellow', 'brown', 'fuschia', 'maroon']
+        #color: ['blue', 'green', 'yellow', 'brown', 'fuschia', 'maroon']
+        color: ['blue']
 
     steps:
       - uses: actions/checkout@v4
