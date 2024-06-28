@@ -54,16 +54,16 @@ async def _read_and_display(cmd, env, do_display: bool):
     }
     while tasks:
         done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
-        assert done
-        for future in done:
-            buf, stream, display = tasks.pop(future)
-            line = future.result()
-            if line:  # not EOF
-                buf.append(line)  # save for later
-                if do_display:
-                    display.write(line)  # display in terminal
-                # schedule to read the next line
-                tasks[asyncio.Task(stream.readline())] = buf, stream, display
+        if done:
+            for future in done:
+                buf, stream, display = tasks.pop(future)
+                line = future.result()
+                if line:  # not EOF
+                    buf.append(line)  # save for later
+                    if do_display:
+                        display.write(line)  # display in terminal
+                    # schedule to read the next line
+                    tasks[asyncio.Task(stream.readline())] = buf, stream, display
 
     # wait for the process to exit
     rc = await process.wait()

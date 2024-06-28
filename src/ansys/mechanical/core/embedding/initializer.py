@@ -75,8 +75,10 @@ def _get_default_linux_version() -> int:
     installed_versions = {
         ver: path for ver, path in awp_roots.items() if path and os.path.isdir(path)
     }
-    assert len(installed_versions) == 1, "multiple AWP_ROOT environment variables found!"
-    return next(iter(installed_versions))
+    if len(installed_versions) == 1:
+        return next(iter(installed_versions))
+    else:
+        raise AssertionError("Multiple AWP_ROOT environment variables found!")
 
 
 def _get_default_version() -> int:
@@ -120,8 +122,10 @@ def initialize(version: int = None):
 
     global INITIALIZED_VERSION
     if INITIALIZED_VERSION != None:
-        assert INITIALIZED_VERSION == version
-        return
+        if INITIALIZED_VERSION == version:
+            return
+        else:
+            raise AssertionError(f"Initialized version is not {version}.")
 
     if version == None:
         version = _get_default_version()
